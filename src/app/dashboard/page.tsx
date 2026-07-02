@@ -1,100 +1,148 @@
 import React from "react";
-import { BookOpen, FileText, GraduationCap, ArrowRight, Clock, Award } from "lucide-react";
-import Link from "next/link";
+import { 
+  BookOpen, 
+  Download, 
+  Star, 
+  BrainCircuit, 
+  HelpCircle,
+  FileText,
+  Clock
+} from "lucide-react";
 
 export default function DashboardOverview() {
   const stats = [
-    { name: "Cours suivis", value: "12", icon: <BookOpen className="w-6 h-6 text-blue-500" /> },
-    { name: "Documents consultés", value: "48", icon: <FileText className="w-6 h-6 text-purple-500" /> },
-    { name: "Examens réussis", value: "5", icon: <GraduationCap className="w-6 h-6 text-green-500" /> },
-    { name: "Points d'excellence", value: "1250", icon: <Award className="w-6 h-6 text-yellow-500" /> },
+    { name: "Documents consultés", value: "24", icon: <BookOpen className="w-5 h-5 text-blue-500" />, bg: "bg-blue-50" },
+    { name: "Documents téléchargés", value: "8", icon: <Download className="w-5 h-5 text-emerald-500" />, bg: "bg-emerald-50" },
+    { name: "Documents favoris", value: "12", icon: <Star className="w-5 h-5 text-amber-500" />, bg: "bg-amber-50" },
+    { name: "Résumés IA générés", value: "3", icon: <BrainCircuit className="w-5 h-5 text-purple-500" />, bg: "bg-purple-50" },
+    { name: "Quiz réalisés", value: "5", icon: <HelpCircle className="w-5 h-5 text-indigo-500" />, bg: "bg-indigo-50" },
   ];
 
-  const recentActivities = [
-    { title: "Introduction à l'Analyse Mathématique", type: "Cours", time: "Il y a 2 heures" },
-    { title: "Sujet d'examen : Droit Constitutionnel 2023", type: "Document", time: "Hier à 14h30" },
-    { title: "Méthodologie de rédaction du TFC", type: "Guide", time: "Il y a 3 jours" },
+  const activities = [
+    { 
+      title: "Introduction à l'Analyse Mathématique", 
+      type: "Document consulté", 
+      time: "Aujourd'hui, 10:23",
+      icon: <BookOpen className="w-4 h-4 text-blue-500" />,
+      color: "bg-blue-500"
+    },
+    { 
+      title: "Sujet d'examen : Droit Constitutionnel 2023", 
+      type: "Document téléchargé", 
+      time: "Hier, 14:30",
+      icon: <Download className="w-4 h-4 text-emerald-500" />,
+      color: "bg-emerald-500"
+    },
+    { 
+      title: "Résumé IA : Méthodologie de rédaction", 
+      type: "Résumé généré", 
+      time: "Il y a 2 jours",
+      icon: <BrainCircuit className="w-4 h-4 text-purple-500" />,
+      color: "bg-purple-500"
+    },
+    { 
+      title: "Quiz IA : Marketing Digital Fondamentaux", 
+      type: "Quiz terminé (Score: 8/10)", 
+      time: "Il y a 3 jours",
+      icon: <HelpCircle className="w-4 h-4 text-indigo-500" />,
+      color: "bg-indigo-500"
+    },
   ];
 
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="text-3xl font-bold text-slate-900">Bonjour, Jean 👋</h1>
-        <p className="mt-2 text-slate-600">Bienvenue sur votre tableau de bord académique. Voici un résumé de votre activité.</p>
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+          <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Vue d'ensemble</h1>
+          <p className="mt-1 text-sm text-slate-500">Suivez votre progression académique et votre utilisation de l'IA.</p>
+        </div>
+        <button className="bg-white border border-slate-200 text-slate-700 px-4 py-2 rounded-lg text-sm font-medium hover:bg-slate-50 hover:text-blue-600 transition-colors shadow-sm">
+          Générer un rapport
+        </button>
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
         {stats.map((stat, idx) => (
-          <div key={idx} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
-            <div className="flex items-center justify-between">
-              <div className="p-3 bg-slate-50 rounded-xl">
+          <div key={idx} className="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-blue-200 transition-all group">
+            <div className="flex items-center gap-4">
+              <div className={`p-3 rounded-xl ${stat.bg} group-hover:scale-110 transition-transform duration-300`}>
                 {stat.icon}
               </div>
+              <div>
+                <h3 className="text-2xl font-bold text-slate-900">{stat.value}</h3>
+              </div>
             </div>
-            <div className="mt-4">
-              <h3 className="text-3xl font-bold text-slate-900">{stat.value}</h3>
-              <p className="text-sm font-medium text-slate-500 mt-1">{stat.name}</p>
-            </div>
+            <p className="text-xs font-medium text-slate-500 mt-3 leading-tight">{stat.name}</p>
           </div>
         ))}
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Main Section */}
-        <div className="lg:col-span-2 space-y-8">
-          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-            <div className="p-6 border-b border-slate-100 flex justify-between items-center">
-              <h2 className="text-xl font-bold text-slate-900">Reprendre l'étude</h2>
-              <Link href="/dashboard/courses" className="text-sm font-medium text-blue-600 hover:text-blue-700 flex items-center gap-1">
-                Voir tout <ArrowRight className="w-4 h-4" />
-              </Link>
+        {/* Main Section - Recent Documents */}
+        <div className="lg:col-span-2 space-y-6">
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden flex flex-col h-full">
+            <div className="p-5 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+              <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+                <FileText className="w-5 h-5 text-slate-400" /> Documents recommandés
+              </h2>
+              <a href="/dashboard/library" className="text-sm font-medium text-blue-600 hover:text-blue-700">
+                Parcourir la bibliothèque
+              </a>
             </div>
-            <div className="p-6">
-              <div className="flex flex-col sm:flex-row gap-6 items-center bg-blue-50/50 p-4 rounded-xl border border-blue-100">
-                <div className="w-24 h-24 bg-blue-100 rounded-xl flex items-center justify-center flex-shrink-0">
-                  <BookOpen className="w-10 h-10 text-blue-600" />
-                </div>
-                <div className="flex-1 text-center sm:text-left">
-                  <div className="text-xs font-bold tracking-uppercase text-blue-600 mb-1 uppercase">Licence 2 • Droit</div>
-                  <h3 className="text-lg font-bold text-slate-900">Droit Administratif Général</h3>
-                  <div className="mt-3 flex items-center gap-2 justify-center sm:justify-start">
-                    <div className="w-full bg-slate-200 rounded-full h-2 max-w-[200px]">
-                      <div className="bg-blue-600 h-2 rounded-full" style={{ width: "45%" }}></div>
+            <div className="p-5 flex-1">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {[1, 2].map((i) => (
+                  <div key={i} className="group border border-slate-100 rounded-xl p-4 hover:border-blue-200 hover:shadow-md transition-all cursor-pointer">
+                    <div className="w-full h-32 bg-slate-100 rounded-lg mb-4 flex items-center justify-center overflow-hidden relative">
+                      <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/10 to-purple-500/10"></div>
+                      <BookOpen className="w-8 h-8 text-slate-400 group-hover:scale-110 group-hover:text-blue-500 transition-all" />
                     </div>
-                    <span className="text-sm font-medium text-slate-600">45%</span>
+                    <div className="flex items-start justify-between gap-2">
+                      <div>
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full mb-2 inline-block">Droit</span>
+                        <h3 className="text-sm font-bold text-slate-900 line-clamp-1 group-hover:text-blue-600 transition-colors">Droit des Sociétés</h3>
+                        <p className="text-xs text-slate-500 mt-1">L3 • Pr. Kasongo</p>
+                      </div>
+                      <button className="text-slate-400 hover:text-amber-500 transition-colors">
+                        <Star className="w-4 h-4" />
+                      </button>
+                    </div>
                   </div>
-                </div>
-                <Link 
-                  href="/dashboard/courses" 
-                  className="w-full sm:w-auto px-6 py-2.5 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
-                >
-                  Continuer
-                </Link>
+                ))}
               </div>
             </div>
           </div>
         </div>
 
-        {/* Sidebar Section */}
-        <div className="space-y-8">
-          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6">
-            <h2 className="text-xl font-bold text-slate-900 mb-6">Activité récente</h2>
-            <div className="space-y-6">
-              {recentActivities.map((activity, idx) => (
-                <div key={idx} className="flex gap-4">
-                  <div className="mt-1">
-                    <div className="w-2 h-2 bg-blue-500 rounded-full ring-4 ring-blue-50"></div>
+        {/* Sidebar Section - Activity Timeline */}
+        <div className="space-y-6">
+          <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 h-full">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+                <Clock className="w-5 h-5 text-slate-400" /> Activité récente
+              </h2>
+            </div>
+            
+            <div className="relative pl-6 space-y-8 before:absolute before:inset-y-0 before:left-[11px] before:w-0.5 before:bg-slate-100">
+              {activities.map((activity, idx) => (
+                <div key={idx} className="relative">
+                  <div className={`absolute -left-[30px] w-6 h-6 rounded-full flex items-center justify-center bg-white border-2 border-white ring-1 ring-slate-200 shadow-sm z-10`}>
+                    {activity.icon}
                   </div>
-                  <div>
+                  <div className="flex flex-col">
                     <h4 className="text-sm font-bold text-slate-900">{activity.title}</h4>
-                    <div className="flex items-center gap-2 mt-1">
-                      <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">{activity.type}</span>
-                      <span className="flex items-center text-xs text-slate-500"><Clock className="w-3 h-3 mr-1" /> {activity.time}</span>
-                    </div>
+                    <span className="text-xs font-medium text-slate-500 mt-0.5">{activity.type}</span>
+                    <span className="text-[11px] text-slate-400 mt-1">{activity.time}</span>
                   </div>
                 </div>
               ))}
+            </div>
+            
+            <div className="mt-8 pt-4 border-t border-slate-100 text-center">
+              <button className="text-sm font-medium text-slate-500 hover:text-blue-600 transition-colors">
+                Voir tout l'historique
+              </button>
             </div>
           </div>
         </div>
